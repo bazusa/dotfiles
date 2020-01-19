@@ -3,6 +3,7 @@
 # dated: 01/19/20
 ####################################
 
+export DOTFILES="$HOME/code/home/dotfiles"
 
 ####################################
 # PROMPT
@@ -123,4 +124,4 @@ function preman() # open man page in preview: e.g. preman ls
 # PLUGINS
 ####################################
 
-# source fast-syntax-highlighting.plugin.zsh
+source "$DOTFILES/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"

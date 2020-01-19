@@ -11,11 +11,21 @@ export DOTFILES="$HOME/code/home/dotfiles"
 setopt PROMPT_SUBST
 setopt TRANSIENT_RPROMPT
 
-dir_prompt="%F{yellow}%~%f"
-user_prompt="%(!.%F{red}#%f.%F{white}»%f)"
-cmd_prompt="%(?..%F{red}✗ %?%f )"
+autoload -Uz vcs_info
+precmd_vcs_info()
+{
+  vcs_info
+}
+precmd_functions+=( precmd_vcs_info )
+zstyle ':vcs_info:git:*' formats '%F{142} (%b)%f'
+zstyle ':vcs_info:*' enable git
 
-PROMPT="${dir_prompt} ${cmd_prompt}${user_prompt} "
+git_prompt="\$vcs_info_msg_0_ "
+dir_prompt="%F{yellow}%~%f"
+user_prompt="%(!.%F{red}#%f.%F{white}» %f)"
+cmd_prompt="%(?..%F{red} ✗ %?%f)"
+
+PROMPT="${dir_prompt}${cmd_prompt}${git_prompt}${user_prompt}"
 RPROMPT="%*"
 
 export CLICOLOR=1

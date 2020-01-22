@@ -3,6 +3,7 @@
 # dated: 01/19/20
 ####################################
 
+export PATH="/usr/local/sbin:$PATH"
 export DOTFILES="$HOME/code/home/dotfiles"
 
 ####################################

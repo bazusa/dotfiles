@@ -99,6 +99,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias cls="clear"
+alias dock='/Applications/Docker/Docker\ Quickstart\ Terminal.app/Contents/Resources/Scripts/start.sh && eval "$(docker-machine env default)"'
+alias dockrm='docker rm $(docker ps -aq -f status=exited)'
 alias grep="grep --color=auto"
 
 alias ls="gls -h --group-directories-first --color=auto" # Use gnu ls

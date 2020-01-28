@@ -4,7 +4,7 @@
 ####################################
 
 export PATH="/usr/local/sbin:$PATH"
-export DOTFILES="$HOME/code/home/dotfiles"
+export DOTFILES="$HOME/.dotfiles"
 
 ####################################
 # PROMPT

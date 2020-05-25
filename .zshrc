@@ -22,7 +22,7 @@ zstyle ':vcs_info:git:*' formats '%F{142} (%b)%f'
 zstyle ':vcs_info:*' enable git
 
 git_prompt="\$vcs_info_msg_0_ "
-dir_prompt="%F{yellow}%~%f"
+dir_prompt="%F{yellow}%~3%f"
 user_prompt="%(!.%F{red}#%f.%F{white}» %f)"
 cmd_prompt="%(?..%F{red} ✗ %?%f)"
 

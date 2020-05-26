@@ -9,44 +9,48 @@ tap "homebrew/cask-fonts"
 cask "adoptopenjdk8"
 cask "adoptopenjdk"
 cask "appcleaner"
-cask "calibre"
-cask "cheatsheet"
+cask "calibre" # ebook reader/generator
+cask "cheatsheet" # Cheatsheets for apps
 cask "docker-toolbox"
-cask "dozer"
+cask "dozer" # status bar organizer
+cask "dropbox"
 cask "eclipse-java"
 cask "font-source-code-pro-for-powerline"
 cask "firefox"
 cask "google-chrome"
-cask "iina"
-cask "iterm2"
+cask "iina" # video player for multiple formats - like vnc
+cask "iterm2" # better terminal
+cask "jdownloader" # download management tool
+cask "latest" # software update checker
 cask "microsoft-edge"
-cask "onyx"
-cask "openinterminal-lite"
-cask "rectangle"
-cask "scrivener"
+cask "onyx" # mac cleaner
+cask "openinterminal-lite" # button added to finder to launch in terminal
+cask "rectangle" # window orgainzer
+cask "scrivener" # writing tool
 cask "skype"
 cask "the-unarchiver"
 cask "virtualbox"
 cask "virtualbox-extension-pack"
-cask "visual-studio-code"
+#cask "visual-studio-code"
 #cask "vlc"
-cask "zoomus"
+cask "vnc-viewer"
+cask "vscodium" # vscode without all the Microsoft stuff
+cask "zoomus" # video conferencing
 
 # Brews
-brew "bash"
+brew "aria2" # download utility - like wget, but better 
+brew "bash" # newer version of bash than the defaut bash installed with mac
 brew "brew-cask-completion"
 brew "coreutils"
-brew "curl"
-cask "dozer"
-cask "dropbox"
+#brew "curl"
 brew "git"
 brew "htop"
-brew "jq"
-brew "mas"
+brew "jq" # command-line JSON processor
+brew "mas" # mac apple store command-line
 brew "maven"
 brew "speedtest-cli"
 brew "tree"
-brew "wget"
+#brew "wget"
 brew "zsh-completions"
 
 # mas

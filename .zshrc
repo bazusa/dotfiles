@@ -61,7 +61,7 @@ setopt SHARE_HISTORY
 # see http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-System-Configuration
 
 autoload -U compinit
-compinit
+compinit -i
 
 unsetopt MENU_COMPLETE
 setopt AUTO_MENU

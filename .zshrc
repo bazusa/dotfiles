@@ -18,22 +18,18 @@ precmd_vcs_info()
   vcs_info
 }
 precmd_functions+=( precmd_vcs_info )
-zstyle ':vcs_info:git:*' formats ' %F{white}on%f %F{142} %b'
+zstyle ':vcs_info:git:*' formats '%F{white}on%f %F{142} %b'
 zstyle ':vcs_info:*' enable git
 
-
-
-NEWLINE=$'\n'
+new_line=$'\n'
 git_prompt="\$vcs_info_msg_0_ "
 dir_prompt="%F{yellow}%3~%f"
-user_prompt="%(!.%F{red}#%f.%F{white}with %F{244}$SHELL%f ${NEWLINE}» %f)"
-cmd_prompt="%(?..%F{red} ✗ %?%f)"
+cmd_prompt="%(?..%F{red} ✗ %?%f) "
+user_prompt="%(!.%F{red}#%f.%F{white}➔%f) "
+shell_info_prompt="%F{white}with%f %F{244}$SHELL%f "
 
-
-PROMPT="${dir_prompt}${cmd_prompt}${git_prompt}${user_prompt}"
-RPROMPT="%*"
-
-export CLICOLOR=1
+PROMPT="${dir_prompt}${cmd_prompt}${shell_info_prompt}${git_prompt}${new_line}${user_prompt}"
+RPROMPT="%t"
 
 ####################################
 # HISTORY
@@ -45,18 +41,28 @@ HISTSIZE=100000
 SAVEHIST=100000
 HISTCONTROL=ignoredups
 
-setopt APPEND_HISTORY
-setopt EXTENDED_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_VERIFY
-setopt HIST_NO_STORE
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
+setopt APPEND_HISTORY            # append to history file
+setopt HIST_NO_STORE             # Don't store history commands
+
+function h() # search entire history for "foo" with e.g. h foo
+{
+  # check if we passed any parameters
+  if [ -z "$*" ]; then # if no parameters were passed print entire history
+    history 1
+  else # if words were passed use it as a search
+    history 1 | egrep --color=auto "$@"
+  fi
+}
 
 ####################################
 # COMPLETION
@@ -64,12 +70,12 @@ setopt SHARE_HISTORY
 
 # see http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-System-Configuration
 
-  if type brew &>/dev/null; then
-    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
-    autoload -Uz compinit
-    compinit -i
-  fi
+  autoload -Uz compinit
+  compinit -i
+fi
 
 unsetopt MENU_COMPLETE
 setopt AUTO_MENU
@@ -100,36 +106,25 @@ alias sudo='nocorrect sudo'
 # ALIAS
 ####################################
 
-alias brewup="brew update; brew upgrade; brew cleanup; brew doctor; brew cu -af -y --cleanup"
-alias cd..="cd .." #handle the common typo
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias cls="clear"
+alias brewup='brew update; brew upgrade; brew cleanup; brew doctor; brew cu -af -y --cleanup'
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias cls='clear'
 alias dock='/Applications/Docker/Docker\ Quickstart\ Terminal.app/Contents/Resources/Scripts/start.sh && eval "$(docker-machine env default)"'
 alias dockrm='docker rm $(docker ps -aq -f status=exited)'
-alias grep="grep --color=auto"
-
-alias ls="gls -h --group-directories-first --color=auto" # Use gnu ls
-alias ll="ls -la" # Use a long listing format
-alias l.="ls -d .*" # Show hidden files
-alias lsd="ls -ld -- */" ## Show directories only
-alias python="/usr/local/bin/python3"
+alias grep='grep --color=auto'
+alias ls='gls -h --group-directories-first --color=auto' # Use gnu ls
+alias ll='ls -la' # Use a long listing format
+alias l.='ls -d .*' # Show hidden files
+alias lsd='ls -ld -- */' ## Show directories only
+alias python='/usr/local/bin/python3'
 
 ####################################
 # FUNCTIONS
 ####################################
-
-function h() # search entire history for "foo" with e.g. h foo
-{
-  # check if we passed any parameters
-  if [ -z "$*" ]; then # if no parameters were passed print entire history
-    history 1
-  else # if words were passed use it as a search
-    history 1 | egrep --color=auto "$@"
-  fi
-}
 
 function mkd() # Create a new directory and enter it
 {
@@ -248,6 +243,3 @@ fi
 ####################################
 
 source "$DOTFILES/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-
-# Created by `userpath` on 2020-02-16 17:32:04
-export PATH="$PATH:/Users/bazusa/.local/bin"

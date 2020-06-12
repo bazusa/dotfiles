@@ -18,13 +18,17 @@ precmd_vcs_info()
   vcs_info
 }
 precmd_functions+=( precmd_vcs_info )
-zstyle ':vcs_info:git:*' formats '%F{142} (%b)%f'
+zstyle ':vcs_info:git:*' formats ' %F{white}on%f %F{142} %b'
 zstyle ':vcs_info:*' enable git
 
+
+
+NEWLINE=$'\n'
 git_prompt="\$vcs_info_msg_0_ "
 dir_prompt="%F{yellow}%3~%f"
-user_prompt="%(!.%F{red}#%f.%F{white}» %f)"
+user_prompt="%(!.%F{red}#%f.%F{white}with %F{244}$SHELL%f ${NEWLINE}» %f)"
 cmd_prompt="%(?..%F{red} ✗ %?%f)"
+
 
 PROMPT="${dir_prompt}${cmd_prompt}${git_prompt}${user_prompt}"
 RPROMPT="%*"
@@ -60,8 +64,12 @@ setopt SHARE_HISTORY
 
 # see http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-System-Configuration
 
-autoload -U compinit
-compinit -i
+  if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+  fi
 
 unsetopt MENU_COMPLETE
 setopt AUTO_MENU
@@ -107,6 +115,7 @@ alias ls="gls -h --group-directories-first --color=auto" # Use gnu ls
 alias ll="ls -la" # Use a long listing format
 alias l.="ls -d .*" # Show hidden files
 alias lsd="ls -ld -- */" ## Show directories only
+alias python="/usr/local/bin/python3"
 
 ####################################
 # FUNCTIONS
@@ -132,9 +141,113 @@ function preman() # open man page in preview: e.g. preman ls
   man -t "$@" | open -f -a "Preview"
 }
 
+function changeJDK() # Set the system Java JDK
+{
+if [ "$PROFILE_SHELL" = 'bash' ]; then
+  JDKS_DIR="/Library/Java/JavaVirtualMachines"
+  JDKS=( $(ls ${JDKS_DIR}) )
+  JDKS_STATES=()
+
+  # Map state of JDK
+  for (( i = 0; i < ${#JDKS[@]}; i++ )); do
+    if [[ -f "${JDKS_DIR}/${JDKS[$i]}/Contents/Info.plist" ]]; then
+      JDKS_STATES[${i}]=enable
+    else
+      JDKS_STATES[${i}]=disable
+    fi
+    echo "${i} ${JDKS[$i]} ${JDKS_STATES[$i]}"
+  done
+
+  # Declare variables
+  DEFAULT_JDK_DIR=""
+  DEFAULT_JDK=""
+  OPTION=""
+
+  # OPTION for default jdk and set variables
+  while [[ ! "$OPTION" =~ ^[0-9]+$ || OPTION -ge "${#JDKS[@]}" ]]; do
+    read -r -p "Enter Default JDK: " OPTION
+
+    if [[ ! "$OPTION" =~ ^[0-9]+$ ]]; then
+      echo "Sorry integers only"
+    fi
+
+    if [[ OPTION -ge "${#JDKS[@]}" ]]; then
+      echo "Out of index"
+    fi
+  done
+
+  DEFAULT_JDK_DIR="${JDKS_DIR}/${JDKS[$OPTION]}"
+  DEFAULT_JDK="${JDKS[$OPTION]}"
+
+  # Disable all jdk
+  for (( i = 0; i < ${#JDKS[@]}; i++ )); do
+    if [[ -f "${JDKS_DIR}/${JDKS[$i]}/Contents/Info.plist" ]]; then
+      sudo mv "${JDKS_DIR}/${JDKS[$i]}/Contents/Info.plist" "${JDKS_DIR}/${JDKS[$i]}/Contents/Info.plist.disable"
+    fi
+  done
+
+  # Enable default jdk
+  if [[ -f "${DEFAULT_JDK_DIR}/Contents/Info.plist.disable" ]]; then
+    sudo mv "${DEFAULT_JDK_DIR}/Contents/Info.plist.disable" "${DEFAULT_JDK_DIR}/Contents/Info.plist"
+    echo "Enable ${DEFAULT_JDK} as default JDK"
+  fi
+
+else
+  #echo "Unable to changeJDK, switch to bash (chsh -s /bin/bash) and try again!"
+  JDKS_DIR="/Library/Java/JavaVirtualMachines"
+  JDKS=( $(ls ${JDKS_DIR}) )
+  JDKS_STATES=()
+
+  for ((i = 1; i <= $#JDKS; i++)); do
+    if [[ -f "${JDKS_DIR}/${JDKS[i]}/Contents/Info.plist" ]]; then
+      JDKS_STATES[${i}]=enable
+    else
+      JDKS_STATES[${i}]=disable
+    fi
+    echo "$i ${JDKS[i]} ${JDKS_STATES[i]}"
+  done
+
+  # Declare variables
+  DEFAULT_JDK_DIR=""
+  DEFAULT_JDK=""
+  OPTION=""
+
+  while [[ ! "$OPTION" =~ ^[1-9]+$ || OPTION -gt "${#JDKS[@]}" ]]; do
+    read "OPTION?Enter Default JDK: "
+
+    if [[ ! "$OPTION" =~ ^[0-9]+$ ]]; then
+      echo "Sorry integers only"
+    fi
+
+    if [[ OPTION -gt "${#JDKS[@]}" ]]; then
+      echo "Out of index"
+    fi
+  done
+
+  DEFAULT_JDK_DIR="${JDKS_DIR}/${JDKS[$OPTION]}"
+  DEFAULT_JDK="${JDKS[$OPTION]}"
+
+  # Disable all jdk
+  for ((i = 1; i <= $#JDKS; i++)); do
+    if [[ -f "${JDKS_DIR}/${JDKS[i]}/Contents/Info.plist" ]]; then
+      sudo mv "${JDKS_DIR}/${JDKS[i]}/Contents/Info.plist" "${JDKS_DIR}/${JDKS[i]}/Contents/Info.plist.disable"
+    fi
+  done
+
+  # Enable default jdk
+  if [[ -f "${DEFAULT_JDK_DIR}/Contents/Info.plist.disable" ]]; then
+    sudo mv "${DEFAULT_JDK_DIR}/Contents/Info.plist.disable" "${DEFAULT_JDK_DIR}/Contents/Info.plist"
+    echo "Enable ${DEFAULT_JDK} as default JDK"
+  fi
+
+fi
+}
 
 ####################################
 # PLUGINS
 ####################################
 
 source "$DOTFILES/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+
+# Created by `userpath` on 2020-02-16 17:32:04
+export PATH="$PATH:/Users/bazusa/.local/bin"

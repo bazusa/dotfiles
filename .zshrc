@@ -68,7 +68,7 @@ setopt SHARE_HISTORY
     FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
     autoload -Uz compinit
-    compinit
+    compinit -i
   fi
 
 unsetopt MENU_COMPLETE

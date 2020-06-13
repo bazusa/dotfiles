@@ -18,11 +18,14 @@ precmd_vcs_info()
   vcs_info
 }
 precmd_functions+=( precmd_vcs_info )
-zstyle ':vcs_info:git:*' formats '%F{white}on%f %F{142} %b'
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '%B%F{green}+%f%b'
+zstyle ':vcs_info:git:*' unstagedstr '%B%F{yellow}!%f%b'
+zstyle ':vcs_info:git:*' formats '%F{white}on%f %F{142} %b %c%u'
 zstyle ':vcs_info:*' enable git
 
 new_line=$'\n'
-git_prompt="\$vcs_info_msg_0_ "
+git_prompt="\$vcs_info_msg_0_"
 dir_prompt="%F{yellow}%3~%f"
 cmd_prompt="%(?..%F{red} ✗ %?%f) "
 user_prompt="%(!.%F{red}#%f.%F{white}➔%f) "

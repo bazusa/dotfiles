@@ -24,14 +24,17 @@ zstyle ':vcs_info:git:*' unstagedstr '%B%F{yellow}!%f%b'
 zstyle ':vcs_info:git:*' formats '%F{white}on%f %F{142} %b %c%u'
 zstyle ':vcs_info:*' enable git
 
-new_line=$'\n'
-git_prompt="\$vcs_info_msg_0_"
-dir_prompt="%F{yellow}%3~%f"
+# {user} in {dir} with {current_shell} [on {git_branch} [unstaged] [staged] ] {newline} >
+user_prompt="%F{blue}%n%f in "
+dir_prompt="%F{yellow}%~%f"
+# dir_prompt_short="%FS{yellow}%3~%f" #short dir - last 3 segments
 cmd_prompt="%(?..%F{red} ✗ %?%f) "
-user_prompt="%(!.%F{red}#%f.%F{white}➔%f) "
 shell_info_prompt="%F{white}with%f %F{244}$SHELL%f "
+git_prompt="\$vcs_info_msg_0_"
+new_line=$'\n'
+entry_prompt="%(!.%F{red}#%f.%F{white}➔%f) "
 
-PROMPT="${dir_prompt}${cmd_prompt}${shell_info_prompt}${git_prompt}${new_line}${user_prompt}"
+PROMPT="${user_prompt}${dir_prompt}${cmd_prompt}${shell_info_prompt}${git_prompt}${new_line}${entry_prompt}"
 RPROMPT="%t"
 
 ####################################
@@ -239,6 +242,46 @@ else
   fi
 
 fi
+}
+
+function webdrivers() # Download the latest webdrivers
+{
+WEBDRIVER_LOCATION="$HOME/webdrivers"
+mkdir -p "$WEBDRIVER_LOCATION"
+
+# ChromeDriver
+# echo "Installing latest ChromeDriver ..."
+# version=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+# download_chrome_url=https://chromedriver.storage.googleapis.com/"$version"/chromedriver_mac64.zip
+# echo "Downloading ... $download_chrome_url"
+# if wget -q -nc --progress=bar:force "$download_chrome_url" && unzip -n -qq chromedriver_mac64.zip
+# then
+#   chmod +x chromedriver
+#   mv chromedriver $WEBDRIVER_LOCATION/chromedriver
+#   rm chromedriver_mac64.zip
+#   echo "Installed chromedriver binary in $WEBDRIVER_LOCATION"
+# else
+#   echo "Failed, check download url: $download_chrome_url"
+# fi
+
+echo "installing edge"
+version=$("/Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge1 --version"  >/dev/null 2>&1 || awk '{print $3}')
+echo "ver = $version"
+
+# ## GeckoDriver
+# echo "Installing latest GeckoDriver (Firefox) ..."
+# json=$(wget -qO- https://api.github.com/repos/mozilla/geckodriver/releases/latest)
+# echo $json
+# download_geckodriver_url=$(echo "$json" | jq -r '.assets[].browser_download_url | select(contains("macos"))')
+# echo "Downloading ... $download_geckodriver_url"
+# if curl -s -L "$download_geckodriver_url" | tar -xz
+# then
+#   chmod +x geckodriver
+#   mv geckodriver "$WEBDRIVER_LOCATION"
+#   echo "Installed geckodriver binary in $WEBDRIVER_LOCATION"
+# else
+#   echo "Failed, check download url: $download_geckodriver_url"
+# fi
 }
 
 ####################################

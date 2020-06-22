@@ -12,6 +12,8 @@ export DOTFILES="$HOME/.dotfiles"
 setopt PROMPT_SUBST
 setopt TRANSIENT_RPROMPT
 
+precmd() { print "" }
+
 autoload -Uz vcs_info
 precmd_vcs_info()
 {

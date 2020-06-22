@@ -18,14 +18,32 @@ precmd_vcs_info()
   vcs_info
 }
 precmd_functions+=( precmd_vcs_info )
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr '%B%F{green}+%f%b'
-zstyle ':vcs_info:git:*' unstagedstr '%B%F{yellow}!%f%b'
-zstyle ':vcs_info:git:*' formats '%F{white}on%f %F{142} %b %c%u'
 zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' check-for-changes true
+# zstyle ':vcs_info:git:*' stagedstr '%B%F{green}+%f%b'
+# zstyle ':vcs_info:git:*' unstagedstr '%B%F{yellow}!%f%b'
+zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
+zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
+zstyle ':vcs_info:*' use-simple true
+zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+zstyle ':vcs_info:git*:*' formats '%F{white}on%f %F{142}%f [%F{142}%b%f %m%c%u] ' # default ' (%s)-[%b]%c%u-'
+zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] ' # default ' (%s)-[%b|%a]%c%u-'
+# zstyle ':vcs_info:git:*' formats '%F{white}on%f %F{142} %b %c%u'
+
+function +vi-git-untracked() {
+  emulate -L zsh
+  if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+    hook_com[unstaged]+="%F{blue}●%f"
+  fi
+}
 
 # {user} in {dir} with {current_shell} [on {git_branch} [unstaged] [staged] ] {newline} >
-user_prompt="%F{blue}%n%f in "
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  user_prompt="%F{red}%n@%m%f in "
+else
+  user_prompt="%F{blue}%n%f in "
+fi
+
 dir_prompt="%F{yellow}%~%f"
 # dir_prompt_short="%FS{yellow}%3~%f" #short dir - last 3 segments
 cmd_prompt="%(?..%F{red} ✗ %?%f) "
@@ -101,8 +119,12 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 
 setopt ALIASES
 setopt AUTO_CD
+setopt AUTO_PARAM_SLASH
 setopt CORRECT_ALL
 unsetopt FLOW_CONTROL
+
+# exceptions to auto-correction
+alias bundle='nocorrect bundle'
 alias man='nocorrect man'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
@@ -127,7 +149,7 @@ alias ll='ls -la' # Use a long listing format
 alias l.='ls -d .*' # Show hidden files
 alias lsd='ls -ld -- */' ## Show directories only
 alias python='/usr/local/bin/python3'
-
+alias work='/Users/Shared/repos'
 ####################################
 # FUNCTIONS
 ####################################

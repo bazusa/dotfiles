@@ -46,13 +46,15 @@ fi
 
 dir_prompt="%F{yellow}%~%f"
 # dir_prompt_short="%FS{yellow}%3~%f" #short dir - last 3 segments
-cmd_prompt="%(?..%F{red} ✗ %?%f) "
-shell_info_prompt="%F{white}with%f %F{244}$SHELL%f "
+cmd_prompt="%(?..%F{red} ✗ %? %f)"
+shell_info_prompt="%F{white} with%f %F{244}$SHELL%f "
 git_prompt="\$vcs_info_msg_0_"
 new_line=$'\n'
 entry_prompt="%(!.%F{red}#%f.%F{white}➔%f) "
 
-PROMPT="${user_prompt}${dir_prompt}${cmd_prompt}${shell_info_prompt}${git_prompt}${new_line}${entry_prompt}"
+PROMPT="${user_prompt}${dir_prompt}${shell_info_prompt}${git_prompt}${new_line}${cmd_prompt}${entry_prompt}"
+
+# PROMPT="${user_prompt}${dir_prompt}${cmd_prompt}${shell_info_prompt}${git_prompt}${new_line}${entry_prompt}"
 RPROMPT="%t"
 
 ####################################

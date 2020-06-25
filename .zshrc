@@ -2,7 +2,6 @@
 # .zshrc configured for macos
 # dated: 01/19/20
 ####################################
-
 export PATH="/usr/local/sbin:$PATH"
 export DOTFILES="$HOME/.dotfiles"
 
@@ -148,10 +147,16 @@ alias cls='clear'
 alias dock='/Applications/Docker/Docker\ Quickstart\ Terminal.app/Contents/Resources/Scripts/start.sh && eval "$(docker-machine env default)"'
 alias dockrm='docker rm $(docker ps -aq -f status=exited)'
 alias grep='grep --color=auto'
-alias ls='gls -h --group-directories-first --color=auto' # Use gnu ls
-alias ll='ls -la' # Use a long listing format
-alias l.='ls -d .*' # Show hidden files
-alias lsd='ls -ld -- */' ## Show directories only
+
+#colorls -lA --sd
+alias l.='colorls -A -l -f'
+alias ls='colorls --sd'
+alias lsd='colorls -d -l'
+alias ll='colorls --sd -l'
+# alias ls='gls -h --group-directories-first --color=auto' # Use gnu ls
+# alias ll='ls -la' # Use a long listing format
+# alias l.='ls -d .*' # Show hidden files
+# alias lsd='ls -ld -- */' ## Show directories only
 alias python='/usr/local/bin/python3'
 alias work='/Users/Shared/repos'
 ####################################
@@ -313,5 +318,7 @@ echo "ver = $version"
 ####################################
 # PLUGINS
 ####################################
+
+source $(dirname $(gem which colorls))/tab_complete.sh
 
 source "$DOTFILES/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"

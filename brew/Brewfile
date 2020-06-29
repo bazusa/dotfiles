@@ -52,6 +52,7 @@ brew "speedtest-cli"
 brew "tree"
 #brew "wget"
 brew "zsh-completions"
+brew "zsh-autosuggestions"
 
 # mas
 mas "Amphetamine", id: 937984704

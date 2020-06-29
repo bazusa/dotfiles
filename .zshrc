@@ -322,3 +322,4 @@ echo "ver = $version"
 source $(dirname $(gem which colorls))/tab_complete.sh
 
 source "$DOTFILES/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

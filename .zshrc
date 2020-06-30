@@ -275,46 +275,6 @@ else
 fi
 }
 
-function webdrivers() # Download the latest webdrivers
-{
-WEBDRIVER_LOCATION="$HOME/webdrivers"
-mkdir -p "$WEBDRIVER_LOCATION"
-
-# ChromeDriver
-# echo "Installing latest ChromeDriver ..."
-# version=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-# download_chrome_url=https://chromedriver.storage.googleapis.com/"$version"/chromedriver_mac64.zip
-# echo "Downloading ... $download_chrome_url"
-# if wget -q -nc --progress=bar:force "$download_chrome_url" && unzip -n -qq chromedriver_mac64.zip
-# then
-#   chmod +x chromedriver
-#   mv chromedriver $WEBDRIVER_LOCATION/chromedriver
-#   rm chromedriver_mac64.zip
-#   echo "Installed chromedriver binary in $WEBDRIVER_LOCATION"
-# else
-#   echo "Failed, check download url: $download_chrome_url"
-# fi
-
-echo "installing edge"
-version=$("/Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge1 --version"  >/dev/null 2>&1 || awk '{print $3}')
-echo "ver = $version"
-
-# ## GeckoDriver
-# echo "Installing latest GeckoDriver (Firefox) ..."
-# json=$(wget -qO- https://api.github.com/repos/mozilla/geckodriver/releases/latest)
-# echo $json
-# download_geckodriver_url=$(echo "$json" | jq -r '.assets[].browser_download_url | select(contains("macos"))')
-# echo "Downloading ... $download_geckodriver_url"
-# if curl -s -L "$download_geckodriver_url" | tar -xz
-# then
-#   chmod +x geckodriver
-#   mv geckodriver "$WEBDRIVER_LOCATION"
-#   echo "Installed geckodriver binary in $WEBDRIVER_LOCATION"
-# else
-#   echo "Failed, check download url: $download_geckodriver_url"
-# fi
-}
-
 ####################################
 # PLUGINS
 ####################################

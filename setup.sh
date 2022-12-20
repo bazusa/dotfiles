@@ -9,10 +9,9 @@ DOTFILES="$HOME/.dotfiles"
 main() {
   echo "${DOTFILES}"
   if ! [ -x "$(command -v brew)" ]; then
-    echo "first"
-  else
-    echo "last"
+    echo "Installing homebrew ... "
   fi
+  
   # if ! [ -x "$(command -v brew)" ]; then
   #   echo "Installing homebrew ..."
   #   #  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

@@ -2,24 +2,29 @@
 set -o errexit
 set -o nounset
 set -o pipefail
-# set -x
+
 IFS=$'\n\t'
 DOTFILES="$HOME/.dotfiles"
 
-main() {
-  echo "${DOTFILES}"
-  if ! [ -x "$(command -v brew)" ]; then
-    echo "Installing homebrew ... "
-  fi
-  
-  # if ! [ -x "$(command -v brew)" ]; then
-  #   echo "Installing homebrew ..."
-  #   #  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  # /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  # else
-  #   echo "Homebrew installed ... skipped"
-  # fi
-
+config_defaults() {
+  echo "Configure macOS deafult settings ... "
 }
 
-main "$@"
+config_shell() {
+  echo "Configure shell ... "
+}
+config_misc() {
+  echo "Configure misc ... "
+}
+
+config_apps() {
+  echo "Configure apps ... "
+}
+
+
+main() {
+  config_apps
+  config_shell
+  config_misc
+  config_defaults
+}

@@ -35,4 +35,4 @@ main() {
     echo $?
 }
 
-main "${@}"
+main

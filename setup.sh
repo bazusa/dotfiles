@@ -23,9 +23,16 @@ config_apps() {
 
 main() {
     config_apps
+    echo $?
+    
     config_shell
+    echo $?
+     
     config_misc
+    echo $?
+    
     config_defaults
+    echo $?
 }
 
 main "${@}"

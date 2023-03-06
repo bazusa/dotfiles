@@ -7,24 +7,25 @@ IFS=$'\n\t'
 DOTFILES="$HOME/.dotfiles"
 
 config_defaults() {
-  echo "Configure macOS deafult settings ... "
+    echo "Configure macOS default settings ... "
 }
 
 config_shell() {
-  echo "Configure shell ... "
+    echo "Configure shell ... "
 }
 config_misc() {
-  echo "Configure misc ... "
+    echo "Configure misc ... "
 }
 
 config_apps() {
-  echo "Configure apps ... "
+    echo "Configure apps ... "
 }
-
 
 main() {
-  config_apps
-  config_shell
-  config_misc
-  config_defaults
+    config_apps
+    config_shell
+    config_misc
+    config_defaults
 }
+
+main "${@}"

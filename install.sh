@@ -24,7 +24,8 @@ config_apps() {
     
     brew tap Homebrew/bundle
     brew bundle --file="$DOTFILES"/brewfile
-    
+
+    UNAME_MACHINE="$(/usr/bin/uname -m)"
     if [[ "${UNAME_MACHINE}" == "arm64" ]]
         then
         # On ARM macOS, this script installs to /opt/homebrew only
@@ -33,7 +34,8 @@ config_apps() {
         # On Intel macOS, this script installs to /usr/local only
         HOMEBREW_PREFIX="/usr/local"
     fi
-    echo "brew = $HOMEBREW_PREFIX"
+    echo 'eval "\$(${HOMEBREW_PREFIX}/bin/brew shellenv)"') >> "${HOME}/.zprofile"
+    cat "${HOME}/.zprofile"
 }
 
 config_defaults() {
@@ -62,8 +64,8 @@ config_misc() {
 
 main() {
     bootstrap
-    config_apps
     config_shell
+    config_apps
     config_misc
     config_defaults
 }

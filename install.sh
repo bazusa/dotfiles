@@ -6,12 +6,14 @@ set -o pipefail
 IFS=$'\n\t'
 DOTFILES="$HOME/.dotfiles"
 
+
 bootstrap() {
     echo "=> Clone dotfiles"
     if [ ! -d "$DOTFILES" ]; then
         git clone --recursive https://bazusa@github.com/bazusa/dotfiles.git "$DOTFILES"
     fi
 }
+
 
 config_apps() {
     echo "=> Configure apps ... "
@@ -41,12 +43,8 @@ config_apps() {
             echo 'eval "$(/usr/local/bin/brew shellenv)"' >> "${HOME}/.zprofile"
         fi
     fi
-    cat "${HOME}/.zprofile"
 }
 
-config_defaults() {
-    echo "Configure macOS default settings ... TODO"
-}
 
 config_shell() {
     echo "=> Configure shell ... "
@@ -62,8 +60,13 @@ config_shell() {
     
     ln -sv "$DOTFILES"/sys/.zshrc "$HOME"/.zshrc
     ln -sv "$DOTFILES"/sys/.zprofile "$HOME"/.zprofile
-    source $HOME/.zshrc
 }
+
+
+config_defaults() {
+    echo "Configure macOS default settings ... TODO"
+}
+
 
 config_misc() {
     echo "Configure misc ... TODO"
@@ -75,11 +78,6 @@ main() {
     config_apps
     config_misc
     config_defaults
-
-    echo 'check alias'
-    alias
-    echo 'functions'
-    cat ${DOTFILES}/sys/extras/functions.sh
 }
 
 main

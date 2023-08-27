@@ -24,6 +24,15 @@ config_apps() {
     
     brew tap Homebrew/bundle
     brew bundle --file="$DOTFILES"/brewfile
+    
+    if [[ "${UNAME_MACHINE}" == "arm64" ]]
+        then
+        # On ARM macOS, this script installs to /opt/homebrew only
+        HOMEBREW_PREFIX="/opt/homebrew"
+    else
+        # On Intel macOS, this script installs to /usr/local only
+        HOMEBREW_PREFIX="/usr/local"
+    fi
     echo "brew = $HOMEBREW_PREFIX"
 }
 

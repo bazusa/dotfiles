@@ -34,7 +34,7 @@ config_apps() {
         # On Intel macOS, this script installs to /usr/local only
         HOMEBREW_PREFIX="/usr/local"
     fi
-    echo 'eval "\$(${HOMEBREW_PREFIX}/bin/brew shellenv)"') >> "${HOME}/.zprofile"
+    echo 'eval "\$(${HOMEBREW_PREFIX}/bin/brew shellenv)"' >> "${HOME}/.zprofile"
     cat "${HOME}/.zprofile"
 }
 

@@ -6,6 +6,13 @@ set -o pipefail
 IFS=$'\n\t'
 DOTFILES="$HOME/.dotfiles"
 
+bootstrap() {
+    echo "=> Clone dotfiles"
+    if [ ! -d "$DOTFILES" ]; then
+        git clone --recursive https://bazusa@github.com/bazusa/dotfiles.git "$DOTFILES"
+    fi
+}
+
 config_defaults() {
     echo "Configure macOS default settings ... "
 }
@@ -22,6 +29,7 @@ config_apps() {
 }
 
 main() {
+    bootstrap
     config_apps
     echo $?
     

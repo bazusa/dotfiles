@@ -31,8 +31,15 @@ config_defaults() {
 }
 
 config_shell() {
-    echo "Configure shell ... TODO"
+    echo "=> Configure shell ... "
+    if [ -f "$HOME"/.zshrc ]; then
+        echo "Saving existing file to $HOME/.zshrc.old"
+        mv "$HOME"/.zshrc "$HOME"/.zshrc.old
+    fi
+    
+    ln -sv "$DOTFILES"/sys/.zshrc "$HOME"/.zshrc
 }
+
 config_misc() {
     echo "Configure misc ... TODO"
 }

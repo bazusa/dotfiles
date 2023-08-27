@@ -79,7 +79,7 @@ main() {
     echo 'check alias'
     alias
     echo 'functions'
-    h test
+    cat ${DOTFILES}/sys/extras/functions.sh
 }
 
 main

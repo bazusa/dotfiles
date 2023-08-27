@@ -24,6 +24,7 @@ config_apps() {
     
     brew tap Homebrew/bundle
     brew bundle --file="$DOTFILES"/brewfile
+    echo "brew = $HOMEBREW_PREFIX"
 }
 
 config_defaults() {
@@ -37,7 +38,13 @@ config_shell() {
         mv "$HOME"/.zshrc "$HOME"/.zshrc.old
     fi
     
+    if [ -f "$HOME"/.zprofile ]; then
+        echo "Saving existing file to $HOME/.zprofile.old"
+        mv "$HOME"/.zprofile "$HOME"/.zprofile.old
+    fi
+    
     ln -sv "$DOTFILES"/sys/.zshrc "$HOME"/.zshrc
+    ln -sv "$DOTFILES"/sys/.zprofile "$HOME"/.zprofile
 }
 
 config_misc() {

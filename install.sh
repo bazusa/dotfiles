@@ -62,6 +62,7 @@ config_shell() {
     
     ln -sv "$DOTFILES"/sys/.zshrc "$HOME"/.zshrc
     ln -sv "$DOTFILES"/sys/.zprofile "$HOME"/.zprofile
+    source $HOME/.zshrc
 }
 
 config_misc() {

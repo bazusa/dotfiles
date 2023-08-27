@@ -21,6 +21,9 @@ config_apps() {
     else
         echo "skipped, homebrew already installed."
     fi
+    
+    brew tap Homebrew/bundle
+    brew bundle --file="$DOTFILES"/brewfile
 }
 
 config_defaults() {

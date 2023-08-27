@@ -29,12 +29,11 @@ config_apps() {
     if [[ "${UNAME_MACHINE}" == "arm64" ]]
         then
         # On ARM macOS, this script installs to /opt/homebrew only
-        HOMEBREW_PREFIX="/opt/homebrew"
+        echo 'eval "/opt/homebrew/bin/brew shellenv"' >> "${HOME}/.zprofile"
     else
         # On Intel macOS, this script installs to /usr/local only
-        HOMEBREW_PREFIX="/usr/local"
+        echo 'eval "/usr/local/homebrew/bin/brew shellenv"' >> "${HOME}/.zprofile"
     fi
-    echo 'eval "\$(${HOMEBREW_PREFIX}/bin/brew shellenv)"' >> "${HOME}/.zprofile"
     cat "${HOME}/.zprofile"
 }
 

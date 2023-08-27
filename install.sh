@@ -13,34 +13,33 @@ bootstrap() {
     fi
 }
 
+config_apps() {
+    echo "=> Configure apps ... "
+    if ! command -v brew &> /dev/null
+    then
+        echo "homebrew could not be found"
+    else
+        echo "skipped, homebrew already installed."
+    fi
+}
+
 config_defaults() {
-    echo "Configure macOS default settings ... "
+    echo "Configure macOS default settings ... TODO"
 }
 
 config_shell() {
-    echo "Configure shell ... "
+    echo "Configure shell ... TODO"
 }
 config_misc() {
-    echo "Configure misc ... "
-}
-
-config_apps() {
-    echo "Configure apps ... "
+    echo "Configure misc ... TODO"
 }
 
 main() {
     bootstrap
     config_apps
-    echo $?
-    
     config_shell
-    echo $?
-     
     config_misc
-    echo $?
-    
     config_defaults
-    echo $?
 }
 
 main

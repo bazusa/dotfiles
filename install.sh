@@ -17,7 +17,7 @@ config_apps() {
     echo "=> Configure apps ... "
     if ! command -v brew &> /dev/null
     then
-        echo "homebrew could not be found"
+        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
         echo "skipped, homebrew already installed."
     fi
@@ -28,11 +28,18 @@ config_apps() {
     UNAME_MACHINE="$(/usr/bin/uname -m)"
     if [[ "${UNAME_MACHINE}" == "arm64" ]]
         then
+        if ! grep -q "bin/brew" "${HOME}/.zprofile"
+            then
+            echo 'eval "(/usr/local/brew shellenv)"' >> "${HOME}/.bp"
+        fi
         # On ARM macOS, this script installs to /opt/homebrew only
         echo 'eval $("/opt/homebrew/bin/brew shellenv")' >> "${HOME}/.zprofile"
     else
         # On Intel macOS, this script installs to /usr/local only
-        echo 'eval $("/usr/local/bin/brew shellenv")' >> "${HOME}/.zprofile"
+        if ! grep -q "bin/brew" "${HOME}/.zprofile"
+            then
+            echo 'eval "(/usr/local/bin/brew shellenv)"' >> "${HOME}/.zprofile"
+        fi
     fi
     cat "${HOME}/.zprofile"
 }

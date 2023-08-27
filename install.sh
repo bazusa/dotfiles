@@ -64,7 +64,8 @@ config_shell() {
 
 
 config_defaults() {
-    echo "Configure macOS default settings ... TODO"
+    echo "=> Configure macOS default settings ... "
+    source "$DOTFILES"/.macos
 }
 
 

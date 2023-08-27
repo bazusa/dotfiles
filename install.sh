@@ -32,7 +32,7 @@ config_apps() {
         echo 'eval $("/opt/homebrew/bin/brew shellenv")' >> "${HOME}/.zprofile"
     else
         # On Intel macOS, this script installs to /usr/local only
-        echo 'eval $("/usr/local/homebrew/bin/brew shellenv")' >> "${HOME}/.zprofile"
+        echo 'eval $("/usr/local/bin/brew shellenv")' >> "${HOME}/.zprofile"
     fi
     cat "${HOME}/.zprofile"
 }

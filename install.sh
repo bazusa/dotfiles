@@ -74,6 +74,11 @@ main() {
     config_apps
     config_misc
     config_defaults
+
+    echo 'check alias'
+    alias
+    echo 'functions'
+    h test
 }
 
 main

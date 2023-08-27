@@ -38,7 +38,7 @@ config_apps() {
         # On Intel macOS, this script installs to /usr/local only
         if ! grep -q "bin/brew" "${HOME}/.zprofile"
             then
-            echo 'eval "(/usr/local/bin/brew shellenv)"' >> "${HOME}/.zprofile"
+            echo 'eval "$(/usr/local/bin/brew shellenv)"' >> "${HOME}/.zprofile"
         fi
     fi
     cat "${HOME}/.zprofile"

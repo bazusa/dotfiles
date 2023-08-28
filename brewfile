@@ -1,4 +1,14 @@
 # Brews
 brew 'coreutils'
+brew 'jq'
+brew 'mas'
+brew 'shellcheck'
+brew 'tree'
 
 # Casks
+cask 'appcleaner'
+cask 'exa'
+cask 'iterm2'
+vask 'vlc'
+
+# App store apps (mas)

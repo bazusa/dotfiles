@@ -1,5 +1,6 @@
 # Brews
 brew 'coreutils'
+brew 'exa'
 brew 'jq'
 brew 'mas'
 brew 'shellcheck'
@@ -7,7 +8,6 @@ brew 'tree'
 
 # Casks
 cask 'appcleaner'
-cask 'exa'
 cask 'iterm2'
 cask 'vlc'
 

@@ -9,6 +9,6 @@ brew 'tree'
 cask 'appcleaner'
 cask 'exa'
 cask 'iterm2'
-vask 'vlc'
+cask 'vlc'
 
 # App store apps (mas)

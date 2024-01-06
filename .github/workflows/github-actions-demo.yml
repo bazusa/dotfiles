@@ -14,7 +14,9 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       
       - name: Execute full install
-      - run: echo format('runner ALL=(ALL) NOPASSWD{0} ALL', ':') | sudo tee -a /etc/sudoers.d/runner
-      - run:  ./install.sh
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+        run: echo format('runner ALL=(ALL) NOPASSWD{0} ALL', ':') | sudo tee -a /etc/sudoers.d/runner
+      - name: run install file 
+        run:  ./install.sh
+      - name: finish up
+        run: echo "🍏 This job's status is ${{ job.status }}."
       

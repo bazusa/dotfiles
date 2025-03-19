@@ -9,17 +9,13 @@
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, mac-app-util }:
-  let
-    configuration = { pkgs, ... }: {
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-      system.stateVersion = 6;
-      import = ./system.nix;
-    };
-  in
   {
     darwinConfigurations."bron" = nix-darwin.lib.darwinSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+
       modules = [
-        configuration
+        ./system.nix
         mac-app-util.darwinModules.default
         ];
     };

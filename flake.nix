@@ -20,6 +20,13 @@
         ];
 
       nix.enable = false;
+      users.users.bazusa = { # Add this user definition
+        name = "bazusa";
+        home = "/Users/bazusa"; # Adjust the home directory if needed
+        # isNormalUser = true;
+        #shell = pkgs.zsh; # set the shell if needed.
+      };
+
       #system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 6;
       nixpkgs.hostPlatform = "x86_64-darwin";
@@ -35,7 +42,7 @@
           {
             home-manager = {
               useGlobalPkgs = true;
-              # useUserPackages = true;
+              useUserPackages = true;
               users.bazusa = import ./modules/home.nix;
               extraSpecialArgs = { inherit inputs; };
             };

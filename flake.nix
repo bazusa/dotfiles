@@ -12,6 +12,9 @@
   {
     darwinConfigurations."bron" = nix-darwin.lib.darwinSystem {
       system = "x86_64-linux";
+      system.configurationRevision = self.rev or self.dirtyRev or null;
+      system.stateVersion = 6;
+
       specialArgs = { inherit inputs; };
 
       modules = [

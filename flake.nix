@@ -15,11 +15,19 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, mac-app-util, home-manager, ... }:
   let
     configuration = { pkgs, ... }: {
+      networking.hostName = "bron";
+      networking.localHostName = "bron";
+      networking.computerName = "bron";
+
+      nix.enable = false;
+
+      nixpkgs.hostPlatform = "x86_64-darwin";
+      nixpkgs.config.allowUnfree = true;
+
       environment.systemPackages =
         [ pkgs.vim
         ];
 
-      nix.enable = false;
       users.users.bazusa = { # Add this user definition
         name = "bazusa";
         home = "/Users/bazusa"; # Adjust the home directory if needed
@@ -29,7 +37,6 @@
 
       #system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 6;
-      nixpkgs.hostPlatform = "x86_64-darwin";
     };
   in
   {

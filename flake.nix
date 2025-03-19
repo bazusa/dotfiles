@@ -37,7 +37,7 @@
               useGlobalPkgs = true;
               # useUserPackages = true;
               users.bazusa = import ./modules/home.nix;
-              extraSpecialArgs = { inherit hostname inputs; };
+              extraSpecialArgs = { inherit inputs; };
             };
           }
       ];

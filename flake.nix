@@ -12,6 +12,8 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, mac-app-util }:
   {
     darwinConfigurations."bron" = nix-darwin.lib.darwinSystem {
+      system.configurationRevision = self.rev or self.dirtyRev or null;
+      system.stateVersion = 6;
       modules = [
         ./modules/system.nix
         mac-app-util.darwinModules.default

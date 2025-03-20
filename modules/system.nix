@@ -10,7 +10,7 @@
   nixpkgs.hostPlatform = "x86_64-darwin";
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs [
+  environment.systemPackages = with pkgs; [
     vim
     iterm2
   ];

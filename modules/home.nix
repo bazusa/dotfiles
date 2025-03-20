@@ -17,23 +17,24 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
     ];
-    profiles.default.userSettings = {
-      "editor.fontFamily" = "Hack Nerd Font";
-      "editor.fontSize" = 14;
-      "editor.fontLigatures" = true;
-      "editor.formatOnSave" = true;
-      "editor.lineHeight" = 1.4;
-      "editor.minimap.enabled" = false;
-      "editor.renderWhitespace" = "all";
-      "editor.tabSize" = 2;
-      "editor.wordWrap" = "on";
-      "files.autoSave" = "afterDelay";
-      "files.autoSaveDelay" = 1000;
-      "files.trimTrailingWhitespace" = true;
-      "workbench.colorTheme" = "Catppuccino Macchiato";
-    };
+    # profiles.default.userSettings = {
+    #   "editor.fontFamily" = "Hack Nerd Font";
+    #   "editor.fontSize" = 14;
+    #   "editor.fontLigatures" = true;
+    #   "editor.formatOnSave" = true;
+    #   "editor.lineHeight" = 1.4;
+    #   "editor.minimap.enabled" = false;
+    #   "editor.renderWhitespace" = "all";
+    #   "editor.tabSize" = 2;
+    #   "editor.wordWrap" = "on";
+    #   "files.autoSave" = "afterDelay";
+    #   "files.autoSaveDelay" = 1000;
+    #   "files.trimTrailingWhitespace" = true;
+    #   "workbench.colorTheme" = "Catppuccino Macchiato";
+    # };
   };
 }

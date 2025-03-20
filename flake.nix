@@ -15,35 +15,19 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, mac-app-util, home-manager, ... }:
   let
     configuration = { pkgs, ... }: {
-      networking.hostName = "bron";
-      networking.localHostName = "bron";
-      networking.computerName = "bron";
-
-      nix.enable = false;
-
-      nixpkgs.hostPlatform = "x86_64-darwin";
-      nixpkgs.config.allowUnfree = true;
-
-      environment.systemPackages =
-        [ pkgs.vim
-        ];
-
-      users.users.bazusa = { # Add this user definition
+      users.users.bazusa = {
         name = "bazusa";
-        home = "/Users/bazusa"; # Adjust the home directory if needed
-        # isNormalUser = true;
-        #shell = pkgs.zsh; # set the shell if needed.
+        home = "/Users/bazusa";
       };
 
-      #system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 6;
     };
   in
   {
-    # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."simple" = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
+        ./modules/system.nix
         mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
           {

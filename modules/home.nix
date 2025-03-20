@@ -3,6 +3,7 @@
 {
   home.stateVersion = "23.05";
   programs.home-manager.enable = true;
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
